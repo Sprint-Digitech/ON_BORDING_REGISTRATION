@@ -1,0 +1,349 @@
+<router-outlet></router-outlet>
+<div class="signup-container">
+  <div class="step-indicator">
+    <div class="step"
+      [ngClass]="{'step-active': getStepState(1) === 'edit', 'step-completed': getStepState(1) === 'done'}">
+      <div class="step-icon">
+        <mat-icon *ngIf="getStepState(1) === 'done'">check</mat-icon>
+        <span *ngIf="getStepState(1) !== 'done'">1</span>
+      </div>
+      <span class="step-label">Account</span>
+    </div>
+    <div class="step-divider"></div>
+
+    <div class="step"
+      [ngClass]="{'step-active': getStepState(2) === 'edit', 'step-completed': getStepState(2) === 'done'}">
+      <div class="step-icon">
+        <mat-icon *ngIf="getStepState(2) === 'done'">check</mat-icon>
+        <span *ngIf="getStepState(2) !== 'done'">2</span>
+      </div>
+      <span class="step-label">Company</span>
+    </div>
+    <div class="step-divider"></div>
+
+    <div class="step"
+      [ngClass]="{'step-active': getStepState(3) === 'edit', 'step-completed': getStepState(3) === 'done'}">
+      <div class="step-icon">
+        <mat-icon *ngIf="getStepState(3) === 'done'">check</mat-icon>
+        <span *ngIf="getStepState(3) !== 'done'">3</span>
+      </div>
+      <span class="step-label">Review</span>
+    </div>
+    <!-- <div class="step-divider"></div>
+
+    <div class="step"
+      [ngClass]="{'step-active': getStepState(4) === 'edit', 'step-completed': getStepState(4) === 'done'}">
+      <div class="step-icon">
+        <mat-icon *ngIf="getStepState(4) === 'done'">check</mat-icon>
+        <span *ngIf="getStepState(4) !== 'done'">4</span>
+      </div>
+      <span class="step-label">Review</span>
+    </div> -->
+  </div>
+
+  <!-- Account Step -->
+<div *ngIf="currentStep === 1 && !isCompleted" class="step-content">
+  <h2>Create your account</h2>
+  <p class="step-subtitle">Start your 30-day free trial - no credit card required</p>
+
+  <form [formGroup]="accountFormGroup" class="two-column-form">
+    <!-- Two-column layout -->
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" required>
+      <mat-error>First Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" required>
+      <mat-error>Last Name is required</mat-error>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Full name</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error>Name is required</mat-error>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Work Email</mat-label>
+      <input matInput formControlName="email" required>
+      <mat-error>Valid email is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>Phone number</mat-label>
+      <input type="number" matInput formControlName="phoneNumber" required>
+      <mat-error>Phone number is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>Company Name</mat-label>
+      <input matInput formControlName="companyName" required>
+      <mat-error>Company Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>Number of Employees</mat-label>
+      <mat-select formControlName="employeeCount" required>
+        <mat-option *ngFor="let count of employeeCountOptions" [value]="count">
+          {{count}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>Designation</mat-label>
+      <input matInput formControlName="designationName" required>
+      <mat-error>Designation is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput [type]="showPassword ? 'text' : 'password'" formControlName="password" required>
+      <button mat-icon-button matSuffix (click)="togglePasswordVisibility('current')">
+        <mat-icon>{{ showPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+      <mat-error>At least 8 characters required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" required>
+      <button mat-icon-button matSuffix (click)="togglePasswordVisibility('confirm')">
+        <mat-icon>{{ showConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+      <mat-error>Passwords must match</mat-error>
+    </mat-form-field>
+
+    <div class="button-row full-width">
+      <button mat-flat-button color="primary" class="continue-button" 
+        (click)="nextStep()" [disabled]="!accountFormGroup.valid">
+        Continue with Email
+      </button>
+    </div>
+  </form>
+
+    <div class="trial-features">
+      <p>Your 30-day free trial includes:</p>
+      <div class="features-grid">
+        <div class="feature-item">
+          <mat-icon>people</mat-icon>
+          <span>Multi-company management</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon>description</mat-icon>
+          <span>Group features</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon>support</mat-icon>
+          <span>Premium support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Company Step -->
+<div *ngIf="currentStep === 2 && !isCompleted" class="step-content">
+  <h2>Company Details</h2>
+  <p class="step-subtitle">Tell us about your company</p>
+
+  <form [formGroup]="companyFormGroup" class="two-column-form">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Industry</mat-label>
+      <mat-select formControlName="industry" required>
+        <mat-option *ngFor="let industry of industryOptions" [value]="industry">
+          {{industry}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h3 class="full-width">Date & Time Settings</h3>
+    <p class="step-subtitle full-width">Select your time zone and date format</p>
+
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>Date Format</mat-label>
+       <mat-select id="dateFormat" placeholder="Select Date Format" formControlName="dateFormat">
+          <mat-option value="DD/MM/YYYY">DD/MM/YYYY</mat-option>
+          <mat-option value="MM/DD/YYYY">MM/DD/YYYY</mat-option>
+          <mat-option value="YYYY/DD/MM">YYYY.DD.MM</mat-option>
+          <mat-option value="YYYY/DD/MM">DD.MM.YYYY</mat-option>
+          <mat-option value="DD-MM-YYYY">DD-MMM-YYYY</mat-option>
+          <mat-option value="YYYY/DD/MM">YYYY-DD-MM</mat-option>
+          <mat-option value="YYYY/MM/DD">YYYY/MM/DD</mat-option>
+          <mat-option value="DD/MM/YY">DD/MM/YY</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>Date Field Separator</mat-label>
+      <mat-select formControlName="tDateFieldSeperator">
+          <mat-option value="/"> / </mat-option>
+          <mat-option value="-"> - </mat-option>
+          <mat-option value="."> . </mat-option>
+        </mat-select>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>Time Format</mat-label>
+     <mat-select id="timeFormat" formControlName="timeformat">
+          <mat-option value="12-hour">12-hour</mat-option>
+          <mat-option value="24-hour">24-hour</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="col-span-1">
+      <mat-label>Timezone</mat-label>
+      <mat-select formControlName="timezone">
+          <mat-option value="UTC (Coordinated Universal Time)">UTC (Coordinated Universal Time)</mat-option>
+          <mat-option value="GMT (Greenwich Mean Time)">GMT (Greenwich Mean Time)</mat-option>
+          <mat-option value="IST (Indian Standard Time, UTC+5:30)">IST (Indian Standard Time, UTC+5:30)</mat-option>
+          <mat-option value="ICT (Indochina Time - UTC+7:00)">ICT (Indochina Time - UTC+7:00)</mat-option>
+          <mat-option value="BST (Bangladesh Standard Time, UTC+6:00)">BST (Bangladesh Standard Time, UTC+6:00)</mat-option>
+          <mat-option value="CST (China Standard Time, UTC+8:00)">CST (China Standard Time, UTC+8:00)</mat-option>
+          <mat-option value="SGT (Singapore Time, UTC+8:00)">SGT (Singapore Time, UTC+8:00)</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Time Display Format</mat-label>
+      <mat-select placeholder="Select Separator" formControlName="displayFormat">
+          <mat-option value="Hours:Minutes:Seconds">Hours:Minutes:Seconds</mat-option>
+          <mat-option value="Hours:Minutes">Hours:Minutes</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="button-row full-width">
+      <button mat-stroked-button (click)="prevStep()" class="back-button">
+        Back
+      </button>
+      <button mat-flat-button color="primary" class="continue-button"
+        (click)="nextStep()" [disabled]="!companyFormGroup.valid">
+        Save & Next
+      </button>
+    </div>
+  </form>
+
+  <div class="trial-features">
+      <p>Your 30-day free trial includes:</p>
+      <div class="features-grid">
+        <div class="feature-item">
+          <mat-icon>people</mat-icon>
+          <span>Multi-company management</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon>description</mat-icon>
+          <span>Group features</span>
+        </div>
+        <div class="feature-item">
+          <mat-icon>support</mat-icon>
+          <span>Premium support</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Package Step -->
+  <!-- <div *ngIf="currentStep === 3 && !isCompleted" class="step-content">
+    <h2>Choose your package</h2>
+    <p class="step-subtitle">Select the package that best fits your needs</p>
+
+    <form [formGroup]="packageFormGroup">
+      <div class="package-options">
+        <div class="package-card" [ngClass]="{'selected': selectedPackage === 'starter'}"
+          (click)="selectPackage('starter')">
+          <h3>Starter Package</h3>
+          <ul>
+            <li>Up to 50 employees</li>
+            <li>Core HR features</li>
+            <li>Basic reporting</li>
+          </ul>
+        </div>
+
+        <div class="package-card" [ngClass]="{'selected': selectedPackage === 'professional'}"
+          (click)="selectPackage('professional')">
+          <h3>Professional Package</h3>
+          <ul>
+            <li>Up to 200 employees</li>
+            <li>Advanced features</li>
+            <li>Custom reporting</li>
+            <li>Multi-company dashboard</li>
+          </ul>
+        </div>
+
+        <div class="package-card" [ngClass]="{'selected': selectedPackage === 'enterprise'}"
+          (click)="selectPackage('enterprise')">
+          <h3>Enterprise Package</h3>
+          <ul>
+            <li>Unlimited employees</li>
+            <li>Premium features</li>
+            <li>Advanced analytics</li>
+            <li>Priority support</li>
+            <li>Custom solutions</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button mat-stroked-button (click)="prevStep()" class="back-button">
+          Back
+        </button>
+        <button mat-flat-button color="primary" class="continue-button" (click)="nextStep()" [disabled]="!packageFormGroup.valid">
+          Save & Next
+        </button>
+      </div>
+    </form>
+  </div> -->
+
+  <!-- Review Step -->
+  <div *ngIf="currentStep === 3 && !isCompleted" class="step-content">
+    <div class="d-flex justify-content-center align-items-center">
+    <h2>Welcome to HRIS!</h2>
+    <div class="success-check">
+      <mat-icon>check_circle</mat-icon>
+    </div>
+   </div>
+    <h2>Review & Confirm</h2>
+    <!-- <p class="step-subtitle">Review your information</p> -->
+
+    <div class="review-info">
+      <ul>
+        <!-- <li><strong>Name:</strong> {{accountFormGroup.get('firstName')?.value}} {{accountFormGroup.get('lastName')?.value}}</li> -->
+        <li><strong>First Name:</strong> {{accountFormGroup.get('firstName')?.value}}</li>
+        <li><strong>Last Name:</strong> {{accountFormGroup.get('lastName')?.value}}</li>
+        <li><strong>Email:</strong> {{accountFormGroup.get('email')?.value}}</li>
+        <!-- <li><strong>CompanyGroup:</strong> {{companyFormGroup.get('companyGroup')?.value}}</li> -->
+        <li><strong>Company:</strong> {{accountFormGroup.get('companyName')?.value}}</li>
+        <li><strong>Industry:</strong> {{companyFormGroup.get('industry')?.value}}</li>
+        <!-- <li><strong>Size:</strong> {{companyFormGroup.get('employeeCount')?.value}}</li> -->
+        <!-- <li><strong>Package:</strong> {{packageFormGroup.get('package')?.value}}</li> -->
+      </ul>
+    </div>
+
+    <form [formGroup]="reviewFormGroup">
+      <mat-checkbox formControlName="confirmTerms" class="terms-checkbox">
+        I agree to the Terms of Service and Privacy Policy
+      </mat-checkbox>
+
+      <div class="button-row">
+        <button mat-stroked-button (click)="prevStep()" class="back-button">
+          Back
+        </button>
+        <button mat-flat-button color="primary" class="continue-button" 
+          (click)="onSubmit()" [disabled]="!reviewFormGroup.valid">
+          Login & Go to Dashboard
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Success Step -->
+  <div *ngIf="isCompleted" class="success-content">
+
+    <!-- <button mat-flat-button color="primary" class="dashboard-button" (click)="startDashboard()">
+      Go to Dashboard <mat-icon>arrow_forward</mat-icon>
+    </button> -->
+  </div>
+</div>

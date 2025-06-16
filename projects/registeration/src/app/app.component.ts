@@ -71,6 +71,28 @@ export class AppComponent implements OnInit {
     // Variables to control password visibility
     showPassword = false;
     showConfirmPassword = false;
+
+  // Add these properties
+  showTermsModal = false;
+  showPrivacyModal = false;
+
+  // Add these methods
+  openTermsModal() {
+    this.showTermsModal = true;
+  }
+
+  openPrivacyModal() {
+    this.showPrivacyModal = true;
+  }
+
+  closeTermsModal() {
+    this.showTermsModal = false;
+  }
+
+  closePrivacyModal() {
+    this.showPrivacyModal = false;
+  }
+
   // Industry dropdown options
   industryOptions = [
     'Healthcare',
@@ -140,6 +162,10 @@ employeeCountOptions: string[] = [
       confirmTerms: [false, Validators.requiredTrue],
     });
   }
+
+  getCurrentDate(): string {
+  return new Date().toLocaleDateString();
+}
 
   // Custom validator to check if the passwords match
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {

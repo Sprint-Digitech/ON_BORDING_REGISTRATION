@@ -44,7 +44,7 @@
   <!-- Account Step -->
 <div *ngIf="currentStep === 1 && !isCompleted" class="step-content">
       <div class="text-center">
-        <img src="../assets/img/fovesta.png" alt="Fovestta HR Software" class="logo-img" style="height: 60px;" />
+        <img src="../assets/img/fovesta.png" alt="Fovestta HR Software" class="logo-img" />
       </div>
   <h2>Create your account</h2>
   <p class="step-subtitle">Start your 30-day free trial - no credit card required</p>
@@ -149,6 +149,9 @@
 
 <!-- Company Step -->
 <div *ngIf="currentStep === 2 && !isCompleted" class="step-content">
+      <div class="text-center">
+        <img src="../assets/img/fovesta.png" alt="Fovestta HR Software" class="logo-img" />
+      </div>
   <h2>Company Details</h2>
   <p class="step-subtitle">Tell us about your company</p>
 
@@ -303,6 +306,9 @@
   <!-- Review Step -->
   <div *ngIf="currentStep === 3 && !isCompleted" class="step-content">
     <div class="d-flex justify-content-center align-items-center">
+      <div class="text-center">
+        <img src="../assets/img/fovesta.png" alt="Fovestta HR Software" class="logo-img" />
+      </div>
     <h2>Welcome to HRIS!</h2>
     <div class="success-check">
       <mat-icon>check_circle</mat-icon>

@@ -43,6 +43,9 @@
 
   <!-- Account Step -->
 <div *ngIf="currentStep === 1 && !isCompleted" class="step-content">
+      <div class="text-center">
+        <img src="../assets/img/fovesta.png" alt="Fovestta HR Software" class="logo-img" style="height: 60px;" />
+      </div>
   <h2>Create your account</h2>
   <p class="step-subtitle">Start your 30-day free trial - no credit card required</p>
 
@@ -117,7 +120,7 @@
       <mat-error>Passwords must match</mat-error>
     </mat-form-field>
 
-    <div class="button-row full-width">
+    <div class="button-row full-width" style="margin-top: 0px;">
       <button mat-flat-button color="primary" class="email-button" 
         (click)="nextStep()" [disabled]="!accountFormGroup.valid">
         Continue with Email
@@ -159,7 +162,7 @@
       </mat-select>
     </mat-form-field>
 
-    <h3 class="full-width">Date & Time Settings</h3>
+    <h2 class="full-width">Date & Time Settings</h2>
     <p class="step-subtitle full-width">Select your time zone and date format</p>
 
     <mat-form-field appearance="outline" class="col-span-1">
@@ -215,7 +218,7 @@
         </mat-select>
     </mat-form-field>
 
-    <div class="button-row full-width">
+    <div class="button-row full-width" style="margin-top: 0px;">
       <button mat-stroked-button (click)="prevStep()" class="back-button">
         Back
       </button>
@@ -520,7 +523,7 @@
 </div>
 
 
-      <div class="button-row full-width">
+      <div class="button-row full-width" style="margin-top: 0px;">
         <button mat-stroked-button (click)="prevStep()" class="back-button">
           Back
         </button>

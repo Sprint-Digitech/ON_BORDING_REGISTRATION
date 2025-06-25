@@ -40,7 +40,7 @@ export class RegisterationService {
     
     environment = {
       production: false,
-      urlAddress: 'https://localhost:7230',
+      urlAddress: 'https://localhost:7274',
     };
     private createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;

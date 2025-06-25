@@ -237,19 +237,20 @@ employeeCountOptions: string[] = [
       timeformat: formValues.timeformat,
       timeDisplayFormat: formValues.displayFormat?.trim().substring(0, 20), // Ensure max length is 20
       timezone: formValues.timezone,
-      scheam: "tenant_" + (companyName &&
-      companyName.length >= 4
-        ? (
-            companyName.charAt(0) +
-            companyName.charAt(1) +
-            companyName.slice(-2)
-          ).toLowerCase()
-        : 'dbo'),
+      // scheam: "tenant_" + (companyName &&
+      // companyName.length >= 4
+      //   ? (
+      //       companyName.charAt(0) +
+      //       companyName.charAt(1) +
+      //       companyName.slice(-2)
+      //     ).toLowerCase()
+      //   : 'dbo'),
+      scheam: 'dbo',
       status: 1,
     };
     console.log('form values', company);
     this.companiesData
-      .postCompany('api/Company/CreatCompanyRegitration', company)
+      .postCompany('api/Account/CreatCompanyRegitration', company)
       .subscribe({
         next: (dataSent) => {
           console.log('data sent:', dataSent);
@@ -321,19 +322,19 @@ employeeCountOptions: string[] = [
     ) {
       // Call saveData and proceed to sendCompaniesData only after successful completion
       this.companiesData
-        .registerUser('api/Account/Registration', {
+        .registerUser('api/Account/Register', {
           firstName: this.accountFormGroup.value.firstName,
           lastName: this.accountFormGroup.value.lastName,
-          tenantSchema: "tenant_" +
-            (this.accountFormGroup.value.companyName &&
-            this.accountFormGroup.value.companyName.length >= 4
-              ? (
-                  this.accountFormGroup.value.companyName.charAt(0) +
-                  this.accountFormGroup.value.companyName.charAt(1) +
-                  this.accountFormGroup.value.companyName.slice(-2)
-                ).toLowerCase()
-              : 'dbo'),
-          // tenantSchema: "Fovestta_Base",
+          // tenantSchema: "tenant_" +
+          //   (this.accountFormGroup.value.companyName &&
+          //   this.accountFormGroup.value.companyName.length >= 4
+          //     ? (
+          //         this.accountFormGroup.value.companyName.charAt(0) +
+          //         this.accountFormGroup.value.companyName.charAt(1) +
+          //         this.accountFormGroup.value.companyName.slice(-2)
+          //       ).toLowerCase()
+          //     : 'dbo'),
+          tenantSchema: 'dbo',
           email: this.accountFormGroup.value.email,
           password: this.accountFormGroup.value.password,
           confirmPassword: this.accountFormGroup.value.confirmPassword,
@@ -341,12 +342,16 @@ employeeCountOptions: string[] = [
         .subscribe({
           next: (response) => {
             console.log('Registration successful:', response);
+            // alert('Registration successful!');
+                     this.openSnackBar('Registration Successfull', 'Close', 'green-snackbar');
             // Only after successful registration, send the company data
             const companyName = this.accountFormGroup.value.companyName;
             this.sendCompaniesData(this.companyFormGroup.value, companyName);
             this.isCompleted = true;
             console.log('Navigating to dashboard');
-            this.router.navigate(['/authentication/login']);
+            console.log("Company registeration completed suceessfully");
+            this.openSnackBar('Company registration completed successfully', 'Close', 'green-snackbar');
+            // this.router.navigate(['/authentication/login']);
           },
           error: (error) => {
             console.error('Registration error:', error);
